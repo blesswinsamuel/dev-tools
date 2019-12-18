@@ -2,11 +2,11 @@
   publish = "build"
   command = "yarn build"
 
-[[redirects]]
-  from = "https://bless-tools.netlify.com/*"
-  to = "https://tools.blesswinsamuel.com/:splat"
-  status = 301
-  force = true
+#[[redirects]]
+#  from = "https://bless-tools.netlify.com/*"
+#  to = "https://tools.blesswinsamuel.com/:splat"
+#  status = 301
+#  force = true
 
 [[redirects]]
   from = "/*"
