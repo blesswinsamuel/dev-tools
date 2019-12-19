@@ -100,7 +100,12 @@ function Avro() {
         {data && (
           <Tabs
             rightElement={
-              <Button onClick={() => setShowRaw(raw => !raw)} selected={showRaw}>RAW</Button>
+              <Button
+                onClick={() => setShowRaw(raw => !raw)}
+                selected={showRaw}
+              >
+                RAW
+              </Button>
             }
             data={[
               {
@@ -108,7 +113,15 @@ function Avro() {
                 children: (
                   <code>
                     {showRaw ? (
-                      <pre>{JSON.stringify(data.schema, null, 2)}</pre>
+                      <textarea
+                        readOnly
+                        style={{
+                          width: '100%',
+                          height: '800px',
+                          fontFamily: 'source-code-pro, Menlo, monospace',
+                        }}
+                        value={JSON.stringify(data.schema, null, 2)}
+                      />
                     ) : (
                       <JSONTree
                         data={data.schema}
@@ -122,19 +135,25 @@ function Avro() {
               },
               {
                 title: 'Records',
-                children: (
+                children: showRaw ? (
+                  <textarea
+                    readOnly
+                    style={{
+                      width: '100%',
+                      height: '800px',
+                      fontFamily: 'source-code-pro, Menlo, monospace',
+                    }}
+                    value={JSON.stringify(data.records, null, 2)}
+                  />
+                ) : (
                   <code>
-                    {showRaw ? (
-                      <pre>{JSON.stringify(data.records, null, 2)}</pre>
-                    ) : (
-                      <JSONTree
-                        data={data.records}
-                        theme={theme}
-                        invertTheme
-                        hideRoot
-                        shouldExpandNode={() => true}
-                      />
-                    )}
+                    <JSONTree
+                      data={data.records}
+                      theme={theme}
+                      invertTheme
+                      hideRoot
+                      shouldExpandNode={() => true}
+                    />
                   </code>
                 ),
               },
