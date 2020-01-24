@@ -3,8 +3,8 @@ import { useDropzone } from 'react-dropzone'
 import avro from 'avsc'
 import JSONTree from 'react-json-tree'
 import styles from './Avro.module.css'
-import Tabs from './components/Tabs'
-import Button from './components/Button'
+import Tabs from '../components/Tabs'
+import Button from '../components/Button'
 
 const theme = {
   scheme: 'monokai',
@@ -84,7 +84,7 @@ function Avro() {
   )
 
   return (
-    <div className="container">
+    <div className={styles.container}>
       <div
         {...getRootProps({
           className,

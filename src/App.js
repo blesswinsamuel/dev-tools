@@ -1,29 +1,24 @@
 import React from 'react'
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
-import Avro from './Avro'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import Layout from './components/Layout'
+import Avro from './pages/Avro'
 
 function App() {
   return (
     <Router>
-      <div>
+      <Layout>
         <Switch>
           <Route path="/" exact>
-            <nav>
-              <ul>
-                <li>
-                  <Link to="/">Home</Link>
-                </li>
-                <li>
-                  <Link to="/avro">Avro</Link>
-                </li>
-              </ul>
-            </nav>
+            <div>Home</div>
           </Route>
           <Route path="/avro">
             <Avro />
           </Route>
+          <Route path="/*">
+            <div>Not Found</div>
+          </Route>
         </Switch>
-      </div>
+      </Layout>
     </Router>
   )
 }
