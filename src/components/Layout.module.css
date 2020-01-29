@@ -21,6 +21,11 @@
   transition: all .2s ease;
 }
 
+.navbar ul li a.active {
+  background: #ffffff;
+  color: #333333;
+}
+
 .navbar ul li a:hover {
   background: #ffffff;
   color: #333333;

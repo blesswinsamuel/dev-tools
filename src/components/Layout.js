@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import styles from './Layout.module.css'
 
 export default function Layout({ children }) {
@@ -8,13 +8,22 @@ export default function Layout({ children }) {
       <nav className={styles.navbar}>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <NavLink to="/" activeClassName={styles.active} exact>Home</NavLink>
           </li>
           <li>
-            <Link to="/avro">Avro</Link>
+            <NavLink to="/avro" activeClassName={styles.active} exact>Avro</NavLink>
           </li>
           <li>
-            <Link to="/timestamp">Timestamp</Link>
+            <NavLink to="/timestamp" activeClassName={styles.active} exact>Timestamp</NavLink>
+          </li>
+          <li>
+            <NavLink to="/base64" activeClassName={styles.active} exact>Base64</NavLink>
+          </li>
+          <li>
+            <NavLink to="/uri-endecode" activeClassName={styles.active} exact>URI</NavLink>
+          </li>
+          <li>
+            <NavLink to="/uri-component-endecode" activeClassName={styles.active} exact>URI Component</NavLink>
           </li>
         </ul>
       </nav>
