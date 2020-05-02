@@ -26,12 +26,12 @@ export default function ConvertView({ convertFn }) {
   return (
     <div className="flex w-100">
       <textarea
-        className={'flex-1 m-4 min-h-screen'}
+        className={'flex-1 my-4 mr-4 min-h-screen'}
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />
       <textarea
-        className={'flex-1 m-4 min-h-screen'}
+        className={'flex-1 my-4 min-h-screen'}
         disabled
         value={handleError(() => convertFn(value))}
       />

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import ConvertView, { ConvertViewButton } from '../components/ConvertView'
 
 function convertBase64(value, encodeOrDecode) {
+  if (!value) return
   switch (encodeOrDecode) {
     case 'encode':
       return btoa(value)

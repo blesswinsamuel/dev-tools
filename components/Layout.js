@@ -26,7 +26,7 @@ export default function Layout({ children }) {
           ))}
         </ul>
       </nav>
-      <div className="relative">{children}</div>
+      <div className="relative m-4">{children}</div>
     </div>
   )
 }

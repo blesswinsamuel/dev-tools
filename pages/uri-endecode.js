@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import ConvertView, { ConvertViewButton } from '../components/ConvertView'
 
 function convertUri(value, encodeOrDecode) {
+  if (!value) return
   switch (encodeOrDecode) {
     case 'encode':
       return encodeURI(value)
