@@ -5,6 +5,7 @@ import JSONTree from 'react-json-tree'
 import styles from './Avro.module.css'
 import Tabs from '../components/Tabs'
 import Button from '../components/Button'
+import dynamic from 'next/dynamic'
 
 const theme = {
   scheme: 'monokai',
@@ -165,4 +166,6 @@ function Avro() {
   )
 }
 
-export default Avro
+export default dynamic(() => Promise.resolve(Avro), {
+  ssr: false
+})
