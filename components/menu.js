@@ -23,6 +23,10 @@ const menu = [
     href: '/uri-component-endecode',
     title: 'URI Component',
   },
+  {
+    href: '/case-converter',
+    title: 'Case Converter',
+  },
 ]
 
 export default menu
