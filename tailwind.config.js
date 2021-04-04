@@ -13,10 +13,7 @@ const bodyFont = 'Lato'
 const bodyFallbackFonts = [...systemFonts, ...fallbackFonts]
 
 module.exports = {
-  purge: [
-    './components/**/*.js',
-    './pages/**/*.js',
-  ],
+  purge: ['./src/**/*.{ts,tsx,js,jsx}', './index.html'],
   theme: {
     fontFamily: {
       display: [headerFont, ...headerFallbackFonts],

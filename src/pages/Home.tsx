@@ -1,15 +1,13 @@
-import Link from 'next/link'
 import menu from '../components/menu'
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function Home() {
   return (
     <ul>
       {menu.map((item) => (
         <li key={item.href}>
-          <Link href={item.href}>
-            <a>{item.title}</a>
-          </Link>
+          <Link to={item.href}>{item.title}</Link>
         </li>
       ))}
     </ul>

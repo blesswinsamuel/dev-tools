@@ -87,7 +87,10 @@ function EpochToTimestamp() {
 
   return (
     <>
-      <input value={value} onChange={(e) => setValue(e.target.value)} />
+      <input
+        value={value}
+        onChange={(e) => setValue(parseInt(e.target.value))}
+      />
       <div className="text-gray-600 italic">
         Supports Unix timestamps in seconds and milliseconds.
       </div>
@@ -121,8 +124,7 @@ function HumanDateToTimestamp() {
   return (
     <>
       <input value={value} onChange={(e) => setValue(e.target.value)} />
-      <div className="text-gray-600 italic">
-      </div>
+      <div className="text-gray-600 italic"></div>
       {render()}
     </>
   )

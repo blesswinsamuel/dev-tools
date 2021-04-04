@@ -1,7 +1,14 @@
 import React from 'react'
 import classNames from './classNames'
 
-function Button({ children, selected, className, ...props }) {
+function Button({
+  children,
+  selected,
+  className,
+  ...props
+}: React.PropsWithChildren<
+  { selected?: boolean; className?: string } & React.ComponentProps<'div'>
+>) {
   return (
     <div
       className={classNames(

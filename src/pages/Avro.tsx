@@ -5,7 +5,6 @@ import JSONTree from 'react-json-tree'
 import styles from './Avro.module.css'
 import Tabs from '../components/Tabs'
 import Button from '../components/Button'
-import dynamic from 'next/dynamic'
 
 const theme = {
   scheme: 'monokai',
@@ -38,7 +37,7 @@ function Avro() {
     isDragAccept,
     isDragReject,
   } = useDropzone({
-    onDrop: async acceptedFiles => {
+    onDrop: async (acceptedFiles) => {
       // const file = await readFile(acceptedFiles[0])
       // console.log(file)
       const [schema, records] = await new Promise((resolve, reject) => {
@@ -46,20 +45,21 @@ function Avro() {
         let schema = null
         const decoder = avro.createBlobDecoder(acceptedFiles[0])
         decoder
-          .on('metadata', function(type) {
+          // @ts-ignore
+          .on('metadata', function (type) {
             schema = type.toJSON()
           })
-          .on('data', function(val) {
+          .on('data', function (val) {
             if (records.length >= 10000) {
               resolve([schema, records])
               return
             }
             records.push(val)
           })
-          .on('end', function() {
+          .on('end', function () {
             resolve([schema, records])
           })
-          .on('error', function(err) {
+          .on('error', function (err) {
             reject(err)
           })
       })
@@ -79,7 +79,7 @@ function Avro() {
         isDragAccept && styles.accept,
         isDragReject && styles.reject,
       ]
-        .filter(x => x)
+        .filter((x) => x)
         .join(' '),
     [isDragActive, isDragReject, isDragAccept, hasData]
   )
@@ -89,7 +89,7 @@ function Avro() {
       <div
         {...getRootProps({
           className,
-          onClick: event => {
+          onClick: (event) => {
             hasData && event.stopPropagation()
           },
         })}
@@ -102,7 +102,7 @@ function Avro() {
           <Tabs
             rightElement={
               <Button
-                onClick={() => setShowRaw(raw => !raw)}
+                onClick={() => setShowRaw((raw) => !raw)}
                 selected={showRaw}
               >
                 RAW
@@ -166,6 +166,4 @@ function Avro() {
   )
 }
 
-export default dynamic(() => Promise.resolve(Avro), {
-  ssr: false
-})
+export default Avro
