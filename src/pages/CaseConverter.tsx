@@ -1,51 +1,31 @@
 import React, { useState } from 'react'
 import ConvertView, { ConvertViewButton } from '../components/ConvertView'
+import { snakeCase, camelCase, startCase, kebabCase } from 'lodash-es'
 
-const capitalize = (s) => {
-  if (typeof s !== 'string') return ''
-  return s.charAt(0).toUpperCase() + s.slice(1)
-}
-const lowerFirstLetter = (s) => {
-  if (typeof s !== 'string') return ''
-  return s.charAt(0).toLowerCase() + s.slice(1)
-}
+type Modes = 'snake' | 'pascal' | 'camel' | 'kebab'
 
-const toSnake = (v, joinStr = '_') =>
-  v
-    .replace(/\W+/g, ' ')
-    .split(/ |\B(?=[A-Z])/)
-    .map((word) => word.toLowerCase())
-    .join(joinStr)
-
-const toPascal = (v) =>
-  v
-    .replace(/\W+/g, ' ')
-    .split(/[_\-]/)
-    .map((word) => capitalize(word))
-    .join('')
-
-function convertCase(value, mode) {
-  if (!value) return
+function convertCase(value: string, mode: Modes): string {
+  if (!value) return ''
 
   switch (mode) {
     case 'snake':
-      return toSnake(value)
+      return snakeCase(value)
     case 'pascal':
-      return toPascal(value)
+      return startCase(camelCase(value)).replace(/ /g, '')
     case 'camel':
-      return lowerFirstLetter(toPascal(value))
+      return camelCase(value)
     case 'kebab':
-      return toSnake(value, '-')
+      return kebabCase(value)
     default:
       return 'Invalid mode'
   }
 }
 
 export default function CaseConverter() {
-  const [mode, setEncodeOrDecode] = useState('snake')
+  const [mode, setEncodeOrDecode] = useState<Modes>('snake')
   return (
     <div>
-      <div>
+      <div className="flex justify-center">
         <ConvertViewButton
           isActive={mode === 'snake'}
           onClick={() => setEncodeOrDecode('snake')}

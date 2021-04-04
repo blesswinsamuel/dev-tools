@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors')
+
 // Credit: https://www.smashingmagazine.com/2015/11/using-system-ui-fonts-practical-guide/
 const systemFonts = [
   '-apple-system',
@@ -7,20 +9,21 @@ const systemFonts = [
   'Roboto',
 ]
 const fallbackFonts = ['Helvetica Neue', 'sans-serif']
-const headerFont = 'Oswald'
-const headerFallbackFonts = [...systemFonts, ...fallbackFonts]
-const bodyFont = 'Lato'
-const bodyFallbackFonts = [...systemFonts, ...fallbackFonts]
+const sansFallbackFonts = [...systemFonts, ...fallbackFonts]
+const { sansFont } = {
+  sansFont: ['IBM Plex Sans', ...sansFallbackFonts],
+}
 
 module.exports = {
   purge: ['./src/**/*.{ts,tsx,js,jsx}', './index.html'],
+  darkMode: 'class',
   theme: {
     fontFamily: {
-      display: [headerFont, ...headerFallbackFonts],
-      body: [bodyFont, ...bodyFallbackFonts],
+      sans: sansFont,
     },
     extend: {
       colors: {
+        gray: colors.trueGray,
         primary: '#B1E55A',
       },
       boxShadow: {
@@ -33,9 +36,12 @@ module.exports = {
     },
   },
   variants: {
-    // backgroundColor: ['responsive', 'hover', 'focus', 'active'],
-    boxShadow: ['responsive', 'hover', 'focus', 'group-hover'],
-    opacity: ['responsive', 'hover', 'group-hover'],
+    extend: {
+      // backgroundColor: ['responsive', 'hover', 'focus', 'active'],
+      backgroundOpacity: ['dark'],
+      boxShadow: ['responsive', 'hover', 'focus', 'group-hover'],
+      opacity: ['responsive', 'hover', 'group-hover', 'dark'],
+    },
   },
   plugins: [],
 }

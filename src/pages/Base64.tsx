@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import ConvertView, { ConvertViewButton } from '../components/ConvertView'
 
-function convertBase64(value, encodeOrDecode) {
-  if (!value) return
+function convertBase64(
+  value: string,
+  encodeOrDecode: 'encode' | 'decode'
+): string {
+  if (!value) return ''
   switch (encodeOrDecode) {
     case 'encode':
       return btoa(value)
@@ -14,10 +17,12 @@ function convertBase64(value, encodeOrDecode) {
 }
 
 export default function Base64() {
-  const [encodeOrDecode, setEncodeOrDecode] = useState('encode')
+  const [encodeOrDecode, setEncodeOrDecode] = useState<'encode' | 'decode'>(
+    'encode'
+  )
   return (
     <div>
-      <div>
+      <div className="flex justify-center">
         <ConvertViewButton
           isActive={encodeOrDecode === 'encode'}
           onClick={() => setEncodeOrDecode('encode')}

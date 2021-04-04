@@ -1,7 +1,13 @@
 import React, { useState } from 'react'
 import classNames from './classNames'
 
-function Tabs({ data, rightElement }) {
+function Tabs({
+  data,
+  rightElement,
+}: {
+  data: { title: string; children: any }[]
+  rightElement: any
+}) {
   const [selected, setSelected] = useState(0)
   return (
     <div>

@@ -5,7 +5,8 @@ import formatRFC7231 from 'date-fns/formatRFC7231'
 
 const getCurrentEpoch = () => Math.round(new Date().getTime() / 1000)
 
-const fromEpoch = (tsStr) => {
+const fromEpoch = (epoch: number) => {
+  const tsStr = epoch.toString()
   const unit = (() => {
     if (tsStr.length > 10) return 'milliseconds'
     else return 'seconds'
@@ -39,7 +40,7 @@ const fromEpoch = (tsStr) => {
   }
 }
 
-const fromHumanStr = (tsStr) => {
+const fromHumanStr = (tsStr: string) => {
   try {
     const d = new Date(tsStr)
     return {
@@ -70,9 +71,9 @@ function EpochToTimestamp() {
         Assuming that this timestamp is in <b>{unit}</b>:<br />
         <table>
           <tbody>
-            {table.map((row, i) => (
+            {(table as any[]).map((row, i) => (
               <tr key={i}>
-                {row.map((cell, i) => (
+                {(row as any[]).map((cell, i) => (
                   <td key={i} className={i === 0 ? 'font-bold' : ''}>
                     {cell}
                   </td>
@@ -107,9 +108,9 @@ function HumanDateToTimestamp() {
     return (
       <table>
         <tbody>
-          {table.map((row, i) => (
+          {(table as any[]).map((row, i) => (
             <tr key={i}>
-              {row.map((cell, i) => (
+              {(row as any[]).map((cell, i) => (
                 <td key={i} className={i === 0 ? 'font-bold' : ''}>
                   {cell}
                 </td>
@@ -150,9 +151,11 @@ export default function Timestamp() {
   return (
     <>
       <CurrentTime />
+      <div>Convert from epoch</div>
       <EpochToTimestamp />
       <br />
       <br />
+      <div>Convert from ISO 8601</div>
       <HumanDateToTimestamp />
     </>
   )

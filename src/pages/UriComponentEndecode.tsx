@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import ConvertView, { ConvertViewButton } from '../components/ConvertView'
 
-function convertUriComponent(value, encodeOrDecode) {
-  if (!value) return
+function convertUriComponent(
+  value: string,
+  encodeOrDecode: 'encode' | 'decode'
+): string {
+  if (!value) return ''
   switch (encodeOrDecode) {
     case 'encode':
       return encodeURIComponent(value)
@@ -14,10 +17,12 @@ function convertUriComponent(value, encodeOrDecode) {
 }
 
 export default function UriComponentEndecode() {
-  const [encodeOrDecode, setEncodeOrDecode] = useState('encode')
+  const [encodeOrDecode, setEncodeOrDecode] = useState<'encode' | 'decode'>(
+    'encode'
+  )
   return (
     <div>
-      <div>
+      <div className="flex justify-center">
         <ConvertViewButton
           isActive={encodeOrDecode === 'encode'}
           onClick={() => setEncodeOrDecode('encode')}

@@ -28,7 +28,7 @@ const theme = {
 }
 
 function Avro() {
-  const [data, setData] = useState(null)
+  const [data, setData] = useState<{ schema: any; records: any } | null>(null)
   const [showRaw, setShowRaw] = useState(false)
   const {
     getRootProps,
@@ -41,8 +41,8 @@ function Avro() {
       // const file = await readFile(acceptedFiles[0])
       // console.log(file)
       const [schema, records] = await new Promise((resolve, reject) => {
-        const records = []
-        let schema = null
+        const records: any = []
+        let schema: any = null
         const decoder = avro.createBlobDecoder(acceptedFiles[0])
         decoder
           // @ts-ignore
