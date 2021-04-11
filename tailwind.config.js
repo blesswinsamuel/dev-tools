@@ -15,6 +15,7 @@ const { sansFont } = {
 }
 
 module.exports = {
+  mode: 'jit',
   purge: ['./src/**/*.{ts,tsx,js,jsx}', './index.html'],
   darkMode: 'class',
   theme: {
@@ -33,14 +34,6 @@ module.exports = {
       //   '96': '24rem',
       //   '128': '32rem',
       // },
-    },
-  },
-  variants: {
-    extend: {
-      // backgroundColor: ['responsive', 'hover', 'focus', 'active'],
-      backgroundOpacity: ['dark'],
-      boxShadow: ['responsive', 'hover', 'focus', 'group-hover'],
-      opacity: ['responsive', 'hover', 'group-hover', 'dark'],
     },
   },
   plugins: [],
