@@ -10,8 +10,9 @@ const systemFonts = [
 ]
 const fallbackFonts = ['Helvetica Neue', 'sans-serif']
 const sansFallbackFonts = [...systemFonts, ...fallbackFonts]
-const { sansFont } = {
+const { sansFont, monoFont } = {
   sansFont: ['IBM Plex Sans', ...sansFallbackFonts],
+  monoFont: ['Consolas', 'monospace'],
 }
 
 module.exports = {
@@ -21,6 +22,7 @@ module.exports = {
   theme: {
     fontFamily: {
       sans: sansFont,
+      mono: monoFont,
     },
     extend: {
       colors: {

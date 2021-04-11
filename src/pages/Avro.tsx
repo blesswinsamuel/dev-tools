@@ -1,14 +1,13 @@
 import React, { useMemo, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
-import JSONTree from 'react-json-tree'
+import ReactJson from 'react-json-view'
 import styles from './Avro.module.css'
 import Tabs from '../components/Tabs'
 import Button from '../components/Button'
 import { default as initWasm, process_avro } from '../../tools-wasm/pkg'
+import wasmURL from '../../tools-wasm/pkg/tools_wasm_bg.wasm?url'
 
 const theme = {
-  scheme: 'monokai',
-  author: 'wimer hazenberg (http://www.monokai.nl)',
   base00: '#272822',
   base01: '#383830',
   base02: '#49483e',
@@ -38,14 +37,18 @@ function Avro() {
     isDragReject,
   } = useDropzone({
     onDrop: async (acceptedFiles) => {
-      // const file = await readFile(acceptedFiles[0])
-      // console.log(file)
-      await initWasm()
-      const buffer = new Uint8Array(await acceptedFiles[0].arrayBuffer())
-      const avroFile = process_avro(buffer)
-      const schema = JSON.parse(avroFile.get_schema())
-      const records = JSON.parse(avroFile.get_record())
-      setData({ schema, records })
+      try {
+        await initWasm(new URL(wasmURL, window.location.origin))
+        const buffer = new Uint8Array(await acceptedFiles[0].arrayBuffer())
+        const avroFile = process_avro(buffer)
+        const schema = JSON.parse(avroFile.get_schema())
+        const records = JSON.parse(avroFile.get_record())
+        console.log('SCHEMA', schema)
+        console.log('RECORDS', records)
+        setData({ schema, records })
+      } catch (e) {
+        console.log(e)
+      }
     },
   }) //{accept: '*'});
 
@@ -93,26 +96,28 @@ function Avro() {
             data={[
               {
                 title: 'Schema',
-                children: (
+                children: showRaw ? (
+                  <textarea
+                    readOnly
+                    style={{
+                      width: '100%',
+                      height: '800px',
+                      fontFamily: 'source-code-pro, Menlo, monospace',
+                    }}
+                    value={JSON.stringify(data.schema, null, 2)}
+                  />
+                ) : (
                   <code>
-                    {showRaw ? (
-                      <textarea
-                        readOnly
-                        style={{
-                          width: '100%',
-                          height: '800px',
-                          fontFamily: 'source-code-pro, Menlo, monospace',
-                        }}
-                        value={JSON.stringify(data.schema, null, 2)}
-                      />
-                    ) : (
-                      <JSONTree
-                        data={data.schema}
-                        theme={theme}
-                        invertTheme
-                        shouldExpandNode={() => true}
-                      />
-                    )}
+                    <ReactJson
+                      src={data.schema}
+                      theme={theme} // 'rjv-default'}
+                      name={false}
+                      style={{
+                        fontFamily:
+                          "'SF Mono', SFMono-Regular, ui-monospace, 'DejaVu Sans Mono', Menlo, Consolas, monospace",
+                        padding: '1em',
+                      }}
+                    />
                   </code>
                 ),
               },
@@ -130,12 +135,15 @@ function Avro() {
                   />
                 ) : (
                   <code>
-                    <JSONTree
-                      data={data.records}
-                      theme={theme}
-                      invertTheme
-                      hideRoot
-                      shouldExpandNode={() => true}
+                    <ReactJson
+                      src={data.records}
+                      theme={theme} // 'rjv-default'}
+                      name={false}
+                      style={{
+                        fontFamily:
+                          "'SF Mono', SFMono-Regular, ui-monospace, 'DejaVu Sans Mono', Menlo, Consolas, monospace",
+                        padding: '1em',
+                      }}
                     />
                   </code>
                 ),

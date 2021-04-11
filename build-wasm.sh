@@ -3,6 +3,11 @@
 
 set -xe
 
+if [[ "$SKIP_WASM_BUILD" == "true" ]]; then
+    echo "Skipping wasm build"
+    exit 0
+fi
+
 # cweb_version=0.6.16
 # cweb=https://github.com/koute/cargo-web/releases/download/$cweb_version/cargo-web-x86_64-unknown-linux-gnu.gz
 # curl -Lo cargo-web.gz $cweb
