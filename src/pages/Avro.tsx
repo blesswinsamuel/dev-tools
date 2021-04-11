@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
-// import avro from 'avsc'
 import JSONTree from 'react-json-tree'
 import styles from './Avro.module.css'
 import Tabs from '../components/Tabs'
@@ -43,34 +42,9 @@ function Avro() {
       // console.log(file)
       await initWasm()
       const buffer = new Uint8Array(await acceptedFiles[0].arrayBuffer())
-
       const avroFile = process_avro(buffer)
       const schema = JSON.parse(avroFile.get_schema())
       const records = JSON.parse(avroFile.get_record())
-
-      // const [schema, records] = await new Promise((resolve, reject) => {
-      //   const records: any = []
-      //   let schema: any = null
-      //   const decoder = avro.createBlobDecoder(acceptedFiles[0])
-      //   decoder
-      //     // @ts-ignore
-      //     .on('metadata', function (type) {
-      //       schema = type.toJSON()
-      //     })
-      //     .on('data', function (val: any) {
-      //       if (records.length >= 10000) {
-      //         resolve([schema, records])
-      //         return
-      //       }
-      //       records.push(val)
-      //     })
-      //     .on('end', function () {
-      //       resolve([schema, records])
-      //     })
-      //     .on('error', function (err: any) {
-      //       reject(err)
-      //     })
-      // })
       setData({ schema, records })
     },
   }) //{accept: '*'});
