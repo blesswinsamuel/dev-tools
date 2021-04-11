@@ -30,7 +30,7 @@
   "scripts": {
     "dev": "vite",
     "start": "yarn dev",
-    "build": "tsc && vite build",
+    "build": "./build-wasm.sh && tsc && vite build",
     "serve": "vite preview"
   },
   "eslintConfig": {
