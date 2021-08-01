@@ -31,31 +31,45 @@ export default function Layout({ children }: React.PropsWithChildren<{}>) {
       </div>
       <div className="drawer-side">
         <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-        <aside className="flex flex-col border-r border-base-200 bg-base-100 text-base-content w-80">
-          <div className="sticky inset-x-0 top-0 z-50 hidden w-full py-1 transition duration-200 ease-in-out border-b lg:block border-base-200 bg-base-100">
-            <div className="mx-auto space-x-1 navbar max-w-none">
-              <div className="flex items-center flex-none">
-                <a
-                  href="/"
-                  aria-label="Homepage"
-                  className="px-2 flex-0 btn btn-ghost md:px-4 nuxt-link-active"
-                >
-                  <div className="inline-block text-3xl font-title text-primary">
-                    Tools
-                  </div>
-                </a>
+        <aside className="flex flex-col justify-between border-r border-base-200 bg-base-100 text-base-content w-80">
+          <div>
+            <div className="sticky inset-x-0 top-0 z-50 hidden w-full py-1 transition duration-200 ease-in-out border-b lg:block border-base-200 bg-base-100">
+              <div className="mx-auto space-x-1 navbar max-w-none">
+                <div className="flex items-center flex-none">
+                  <a
+                    href="/"
+                    aria-label="Homepage"
+                    className="px-2 flex-0 btn btn-ghost md:px-4 nuxt-link-active"
+                  >
+                    <div className="inline-block text-3xl font-title text-primary">
+                      Tools
+                    </div>
+                  </a>
+                </div>
               </div>
             </div>
+            <ul className="menu p-4 overflow-y-auto w-80 bg-base-100 text-base-content">
+              {menu.map((item) => (
+                <li key={item.href}>
+                  <NavLink exact to={item.href}>
+                    {item.title}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
           </div>
-          <ul className="menu p-4 overflow-y-auto w-80 bg-base-100 text-base-content">
-            {menu.map((item) => (
-              <li key={item.href}>
-                <NavLink exact to={item.href}>
-                  {item.title}
-                </NavLink>
+          <div>
+            <ul className="menu p-4 overflow-y-auto w-80 bg-base-100 text-base-content">
+              <li>
+                <a
+                  href="https://github.com/blesswinsamuel/tools"
+                  target="_blank"
+                >
+                  GitHub
+                </a>
               </li>
-            ))}
-          </ul>
+            </ul>
+          </div>
         </aside>
       </div>
     </div>
