@@ -2,23 +2,30 @@ import React, { useEffect, useState } from 'react'
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import formatISO from 'date-fns/formatISO'
 import formatRFC7231 from 'date-fns/formatRFC7231'
+import formatRFC3339 from 'date-fns/formatRFC3339'
 
 const getCurrentEpoch = () => Math.round(new Date().getTime() / 1000)
 
-const fromEpoch = (epoch: number) => {
-  const tsStr = epoch.toString()
+const fromInput = (tsStr: string) => {
   const unit = (() => {
+    if (isNaN(+tsStr)) return 'other'
+    if (tsStr.length > 16) return 'nanoseconds'
+    if (tsStr.length > 13) return 'microseconds'
     if (tsStr.length > 10) return 'milliseconds'
-    else return 'seconds'
+    if (tsStr.length === 10) return 'seconds'
   })()
   const ts = (() => {
     switch (unit) {
+      case 'nanoseconds':
+        return parseInt(tsStr) / 1e6
+      case 'microseconds':
+        return parseInt(tsStr) / 1000
       case 'milliseconds':
         return parseInt(tsStr)
       case 'seconds':
         return parseInt(tsStr) * 1000
       default:
-        return 0
+        return tsStr
     }
   })()
   try {
@@ -27,29 +34,13 @@ const fromEpoch = (epoch: number) => {
       unit,
       date: d,
       table: [
-        ['ISO 8601', formatISO(d)],
-        // ['RFC 3339', formatRFC3339(d)],
-        ['RFC 7231', formatRFC7231(d)],
-        // ['GMT', d.toUTCString()],
-        // ['Your time zone', d.toString()],
-        ['Relative', formatDistanceToNow(d, { addSuffix: true })],
-      ],
-    }
-  } catch (e) {
-    return { error: 'This timestamp is not valid' }
-  }
-}
-
-const fromHumanStr = (tsStr: string) => {
-  try {
-    const d = new Date(tsStr)
-    return {
-      date: d,
-      table: [
         ['Epoch', Math.round(d.getTime() / 1000)],
         ['Epoch (in milliseconds)', d.getTime()],
-        ['ISO 8601', formatISO(d)],
-        // ['RFC 3339', formatRFC3339(d)],
+        [
+          'ISO 8601',
+          formatISO(d, { format: 'extended', representation: 'complete' }),
+        ],
+        ['RFC 3339', formatRFC3339(d, { fractionDigits: 3 })],
         ['RFC 7231', formatRFC7231(d)],
         // ['GMT', d.toUTCString()],
         // ['Your time zone', d.toString()],
@@ -61,73 +52,12 @@ const fromHumanStr = (tsStr: string) => {
   }
 }
 
-function EpochToTimestamp() {
-  const [value, setValue] = useState(getCurrentEpoch)
-  const render = () => {
-    const { error, unit, table } = fromEpoch(value)
-    if (error) return <>{error}</>
-    return (
-      <>
-        Assuming that this timestamp is in <b>{unit}</b>:<br />
-        <table>
-          <tbody>
-            {(table as any[]).map((row, i) => (
-              <tr key={i}>
-                {(row as any[]).map((cell, i) => (
-                  <td key={i} className={i === 0 ? 'font-bold' : ''}>
-                    {cell}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </>
-    )
-  }
-
+export default function Timestamp() {
   return (
-    <>
-      <input
-        value={value}
-        onChange={(e) => setValue(parseInt(e.target.value))}
-      />
-      <div className="text-gray-600 italic">
-        Supports Unix timestamps in seconds and milliseconds.
-      </div>
-      {render()}
-    </>
-  )
-}
-
-function HumanDateToTimestamp() {
-  const [value, setValue] = useState(() => new Date().toString())
-  const render = () => {
-    const { error, table } = fromHumanStr(value)
-    if (error) return <>{error}</>
-    return (
-      <table>
-        <tbody>
-          {(table as any[]).map((row, i) => (
-            <tr key={i}>
-              {(row as any[]).map((cell, i) => (
-                <td key={i} className={i === 0 ? 'font-bold' : ''}>
-                  {cell}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    )
-  }
-
-  return (
-    <>
-      <input value={value} onChange={(e) => setValue(e.target.value)} />
-      <div className="text-gray-600 italic"></div>
-      {render()}
-    </>
+    <div className="m-4">
+      <CurrentTime />
+      <HumanDateToTimestamp />
+    </div>
   )
 }
 
@@ -147,16 +77,55 @@ function CurrentTime() {
   )
 }
 
-export default function Timestamp() {
+function HumanDateToTimestamp() {
+  const [value, setValue] = useState(() => getCurrentEpoch().toString())
+  const render = () => {
+    const { error, unit, table } = fromInput(value)
+    if (error) return <>{error}</>
+    return (
+      <>
+        {unit !== 'other' && (
+          <p className="p">
+            Assuming that this timestamp is in <b>{unit}</b>
+          </p>
+        )}
+        <table className="table">
+          <tbody>
+            {(table as any[]).map((row, i) => (
+              <tr key={i}>
+                {(row as any[]).map((cell, i) => (
+                  <td key={i} className={i === 0 ? 'font-bold' : ''}>
+                    {cell}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </>
+    )
+  }
+
   return (
     <>
-      <CurrentTime />
-      <div>Convert from epoch</div>
-      <EpochToTimestamp />
-      <br />
-      <br />
-      <div>Convert from ISO 8601</div>
-      <HumanDateToTimestamp />
+      <div className="form-control mb-4">
+        <label className="label" htmlFor="human-input">
+          <span className="label-text">Convert from any date format</span>
+        </label>
+        <input
+          id="human-input"
+          className="input"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+        />
+        <label className="label italic">
+          <span className="label-text-alt">
+            Supports timestamps in seconds, milliseconds, microseconds,
+            nanoseconds, ISO 8601, RFC 7231 and RFC 3339.
+          </span>
+        </label>
+      </div>
+      {render()}
     </>
   )
 }

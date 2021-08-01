@@ -17,27 +17,12 @@ function convertBase64(
 }
 
 export default function Base64() {
-  const [encodeOrDecode, setEncodeOrDecode] = useState<'encode' | 'decode'>(
-    'encode'
-  )
   return (
     <div>
-      <div className="flex justify-center">
-        <ConvertViewButton
-          isActive={encodeOrDecode === 'encode'}
-          onClick={() => setEncodeOrDecode('encode')}
-        >
-          Encode
-        </ConvertViewButton>
-        <ConvertViewButton
-          isActive={encodeOrDecode === 'decode'}
-          onClick={() => setEncodeOrDecode('decode')}
-        >
-          Decode
-        </ConvertViewButton>
-      </div>
       <ConvertView
-        convertFn={(value) => convertBase64(value, encodeOrDecode)}
+        convertFn={(value, encodeOrDecode) =>
+          convertBase64(value, encodeOrDecode)
+        }
       />
     </div>
   )

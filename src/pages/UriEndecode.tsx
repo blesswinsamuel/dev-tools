@@ -17,26 +17,11 @@ function convertUri(
 }
 
 export default function UriEndecode() {
-  const [encodeOrDecode, setEncodeOrDecode] = useState<'encode' | 'decode'>(
-    'encode'
-  )
   return (
     <div>
-      <div className="flex justify-center">
-        <ConvertViewButton
-          isActive={encodeOrDecode === 'encode'}
-          onClick={() => setEncodeOrDecode('encode')}
-        >
-          Encode
-        </ConvertViewButton>
-        <ConvertViewButton
-          isActive={encodeOrDecode === 'decode'}
-          onClick={() => setEncodeOrDecode('decode')}
-        >
-          Decode
-        </ConvertViewButton>
-      </div>
-      <ConvertView convertFn={(value) => convertUri(value, encodeOrDecode)} />
+      <ConvertView
+        convertFn={(value, encodeOrDecode) => convertUri(value, encodeOrDecode)}
+      />
     </div>
   )
 }

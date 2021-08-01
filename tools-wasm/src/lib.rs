@@ -59,7 +59,7 @@ pub fn process_avro(data: Vec<u8>) -> AvroResponse {
         .collect();
 
     AvroResponse {
-        schema: schema,
+        schema,
         record: serde_json::to_string(&records).unwrap(),
     }
     // match file_reader.result() {

@@ -44,3 +44,7 @@ opt-level = "s"
 
 [[example]]
 name = "avro_rs_play" # examples/avro_rs_play.rs
+
+# For M1 Mac - https://github.com/rustwasm/wasm-pack/issues/913#issuecomment-783482463
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = false

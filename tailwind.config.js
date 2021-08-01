@@ -16,6 +16,7 @@ const { sansFont, monoFont } = {
 }
 
 module.exports = {
+  plugins: [require('daisyui')],
   mode: 'jit',
   purge: ['./src/**/*.{ts,tsx,js,jsx}', './index.html'],
   darkMode: 'class',
@@ -38,5 +39,4 @@ module.exports = {
       // },
     },
   },
-  plugins: [],
 }

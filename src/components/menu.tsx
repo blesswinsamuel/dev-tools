@@ -1,9 +1,5 @@
 const menu = [
   {
-    href: '/',
-    title: 'Home',
-  },
-  {
     href: '/avro',
     title: 'Avro',
   },
@@ -23,10 +19,10 @@ const menu = [
     href: '/uri-component-endecode',
     title: 'URI Component',
   },
-  {
-    href: '/case-converter',
-    title: 'Case Converter',
-  },
+  // {
+  //   href: '/case-converter',
+  //   title: 'Case Converter',
+  // },
 ]
 
 export default menu
