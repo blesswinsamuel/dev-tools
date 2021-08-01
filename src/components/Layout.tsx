@@ -18,7 +18,7 @@ function SearchIcon() {
 
 export default function Layout({ children }: React.PropsWithChildren<{}>) {
   return (
-    <div className="shadow bg-base-200 drawer drawer-mobile ">
+    <div className="shadow bg-base-200 drawer drawer-mobile min-h-screen">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
       <div className="flex flex-col  drawer-content">
         {/*<label*/}
