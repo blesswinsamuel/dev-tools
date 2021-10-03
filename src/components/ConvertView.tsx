@@ -4,7 +4,7 @@ import classNames from './classNames'
 function handleError(fn: () => string) {
   try {
     return fn()
-  } catch (e) {
+  } catch (e: any) {
     return e.toString()
   }
 }
